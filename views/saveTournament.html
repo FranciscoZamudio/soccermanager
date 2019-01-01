@@ -1,0 +1,22 @@
+<h1>
+    dashboard
+</h1>
+
+  <div>
+    <table class="table">
+      <thead class="thead-dark">
+      <tr>
+        <th>Tournament</th>
+        <th>Date</th>
+        <th>More Info</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr ng-repeat="tournament in tournamentTable">
+        <td>{{ tournament.id_tournament }}</td>
+        <td>{{ tournament.datecreated }}</td>
+        <td><button ng-click="">open</button></td>
+      </tr>
+    </tbody>
+    </table>
+  </div>
