@@ -1,0 +1,26 @@
+<div id="form">
+  <form>
+  <!-- <h3>personal info:</h3><br> -->
+    <div class="form-group">
+      <label for="typeId">Type of tournament</label>
+      <select class="form-control" id="typeId" ng-model = "tournament.type">
+        <option value = "marketing"> top teams
+        <option value = "human resources">world ranking
+      </select>
+    </div>
+
+  <!-- <h3>issue info:</h3><br> -->
+    <div>
+      <label for="playersId">Number of players: </label>
+      <input type="radio" ng-model = "tournament.players" value="3" ng-click="playersInput(3)"> 3
+      <input type="radio" ng-model = "tournament.players" value="4" ng-click="playersInput(4)"> 4
+      <input type="radio" ng-model = "tournament.players" value="5" ng-click="playersInput(5)"> 5
+    </div>
+
+    <div ng-repeat='element in players'>
+        player: <input type='text' ng-model='element.name'>
+    </div>
+
+    <input type="submit" ng-click="createTournament(tournament)" value="upload" />
+  </form>
+</div>
