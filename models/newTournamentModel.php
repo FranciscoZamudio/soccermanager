@@ -3,19 +3,19 @@ define('__ROOT__', dirname(dirname(__FILE__)));
 require(__ROOT__.'/connection.php');
 require(__ROOT__.'/models/queries.php');
 
-$ticket = new Tickets($conn);
+$tournament = new Tournament2($conn);
 
-if(isset($_POST["action"]) && !empty($_POST["action"]) && $_POST["action"] == "addTicket"){
-  if(isset($_POST["ticketInfo"]) && !empty($_POST["ticketInfo"])){
-    $ticket->addTicket(json_decode($_POST["ticketInfo"], true));
+if(isset($_POST["action"]) && !empty($_POST["action"]) && $_POST["action"] == "addTournament"){
+  if(isset($_POST["tournamentInfo"]) && !empty($_POST["tournamentInfo"])){
+    $tournament->addTournament(json_decode($_POST["tournamentInfo"], true));
   }
 };
 
 
 
-class Tickets{
-
+class Tournament2{
   private $conn;
+  private $id;
 
   function __construct($conn){
     $this->conn = $conn;

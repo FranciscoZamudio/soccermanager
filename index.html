@@ -15,11 +15,11 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.2/angular.min.js"></script>
     <script src="https://unpkg.com/@uirouter/angularjs/release/angular-ui-router.js"></script>
     <script src="js/app.js"></script>
-    <script src="controllers/newTournamentController.js"></script>
-    <script src="controllers/saveTournamentController.js"></script>
-    <script src="controllers/championshipsController.js"></script>
-    <script src="controllers/continueTournamentController.js"></script>
-    <script type="text/javascript" src="js/services/ticketsService.js"></script>
+    <script src="js/controllers/newTournamentController.js"></script>
+    <script src="js/controllers/saveTournamentController.js"></script>
+    <script src="js/controllers/championshipsController.js"></script>
+    <script src="js/controllers/continueTournamentController.js"></script>
+    <!--<script type="text/javascript" src="js/services/ticketsService.js"></script> -->
 </head>
 
 <body ng-app="moduleApp">
@@ -32,7 +32,7 @@
                     </a>
                 </li>
                 <li>
-                    <a ui-sref="tickets" ui-sref-active="active">New Tournament</a>
+                    <a ui-sref="newTournament" ui-sref-active="active">New Tournament</a>
                 </li>
                 <li>
                     <a ui-sref="saveTournament" ui-sref-active="active">Save Tournaments</a>
