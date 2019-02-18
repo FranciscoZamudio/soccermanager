@@ -5,12 +5,12 @@ moduleApp.controller("newTournamentController", function($scope, ticketsService,
 
   $scope.postData = function(info){
     $http({
-          url : "./models/ticketsModel.php",
+          url : "../controllers/newTournamentController.php",
           method: 'POST',
           data: info,
           headers: {'Content-Type': 'application/x-www-form-urlencoded'}
       }).then(function mySuccess(response) {
-          console.log("the ticket has been registered");
+          console.log("the tournament has been registered");
       }, function myError(response) {
           console.log("there was an error");
       });
@@ -21,8 +21,11 @@ moduleApp.controller("newTournamentController", function($scope, ticketsService,
 $scope.master = {};
 
 $scope.createTournament = function(tournament) {
-  //var info = 'action=addTicket' + '&ticketInfo=' + JSON.stringify(tournament);
-  //$scope.postData(info);
+  var info = 'action=addTournament' + '&tournamentInfo=' + JSON.stringify(tournament) + '&players=' + $scope.players;
+  $scope.postData(info);
+  //llamar una funcion en modelo que cree
+  console.log(info);
+  console.log(tournament);
   console.log($scope.players);
 };
 

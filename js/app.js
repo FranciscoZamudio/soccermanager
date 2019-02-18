@@ -23,11 +23,18 @@ moduleApp.config(function ($stateProvider,$urlRouterProvider) {
         templateUrl: 'views/championships.html',
         controller: 'championshipsController'
     }
+    var continueTournamentState = {
+        name: 'continueTournament',
+        url: '/continueTournament',
+        templateUrl: 'views/continueTournament.html',
+        controller: 'continueTournamentController'
+    }
 
 
     $stateProvider.state(newTournamentState);
     $stateProvider.state(saveTournamentState);
     $stateProvider.state(championshipState);
+    $stateProvider.state(continueTournamentState);
     $urlRouterProvider.otherwise('/newTournament');
 
 });
