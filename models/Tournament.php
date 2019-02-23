@@ -1,6 +1,7 @@
 <?php
 define('__ROOT__', dirname(dirname(__FILE__)));
-require(__ROOT__.'/connection.php');
+//include(__ROOT__.'/connection.php');
+require_once(__ROOT__.'/models/Player.php');
 
 
 
@@ -10,34 +11,58 @@ class Tournament{
   private $date;
   private $status;
 
-  function __construct(){
+  function __construct($conn){
     $this->conn = $conn;
   }
 
-  function createTournament(){
-    $currentDate = date("Y-m-d")
+  function createTournament($conn, $tInfo, $p){
+    $tournamentInfo = json_decode($tInfo);
 
-    // prepare and bind
+    $date = date("Y-m-d");
+    $finish = 0;//tournament status
+    $tournamentType = $tournamentInfo->type;
+    $numberPlayers = $tournamentInfo->players;
+    $players = json_decode($p);
+
+    //exit();
+    //create tournament
     $stmt = $conn->prepare("INSERT INTO tournament(datecreated, finish) VALUES (?, ?)");
-    $stmt->bind_param("si", $param1, 0);
-    $stmt->execute();
+    $stmt->bind_param("si", $date, $finish);
+    if ($stmt->execute()){
+       $tournamentID = $stmt->insert_id;
+    }
     $stmt->close();
-    $this->conn->close();
+
+    //$tournamentID = $conn->query("SELECT LAST_INSERT_ID()");//id of created tournamentInfo
+    $teamsArray = Tournament::teamsArray($conn, $tournamentType, $numberPlayers);
+
+    //create array of teams
+
+    //create players
+    //print_r($players);
+    foreach($players as $key=>$pl) {
+      $player = new Player($conn);
+      $name = $pl->name;
+      $teams = $teamsArray[$key];
+      $player->createPlayer($tournamentID, $name, $teams);
+      $teams = array();
+    }
+    $conn->close();
   }
 
-  // function createTournament($ticketInfo){
-  //   $param1 = $ticketInfo["area"];
-  //   $param2 = $ticketInfo["description"];
-  //   $param3 = $ticketInfo["name"];
-  //   $param4 = $ticketInfo["priority"];
-  //
-  //   // prepare and bind
-  //
-  //   $stmt = $this->conn->prepare("INSERT INTO tournament(datecreated, finish, winner_team, winner_name) VALUES (?, ?, ?, ?)");
-  //   $stmt->bind_param("ssss", $param1, $param2, $param3, $param4);
-  //   $stmt->execute();
-  //   $stmt->close();
-  //   $this->conn->close();
-  // }
+  private function teamsArray($conn, $tournamentType, $numberPlayers){
+    $numberTeams = $numberPlayers*4;
+
+    $tournamentsArray = array();
+    $stmt = $conn->query("SELECT name FROM teams WHERE type = '".$tournamentType."' order by RAND() limit $numberTeams");
+    if ($stmt->num_rows > 0) {
+      while( $row = $stmt->fetch_assoc() ) {
+          $tournamentsArray[] = $row["name"];
+      }
+    }
+    return array_chunk($tournamentsArray, 4);
+  }
+
+
 }
 ?>

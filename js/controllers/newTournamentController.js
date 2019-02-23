@@ -1,11 +1,11 @@
 //we inject the controller with a model
-moduleApp.controller("newTournamentController", function($scope, ticketsService, $http){
+moduleApp.controller("newTournamentController", function($scope, $http){
 
 
 
   $scope.postData = function(info){
     $http({
-          url : "../controllers/newTournamentController.php",
+          url : "./controllers/newTournamentController.php",
           method: 'POST',
           data: info,
           headers: {'Content-Type': 'application/x-www-form-urlencoded'}
@@ -21,7 +21,7 @@ moduleApp.controller("newTournamentController", function($scope, ticketsService,
 $scope.master = {};
 
 $scope.createTournament = function(tournament) {
-  var info = 'action=addTournament' + '&tournamentInfo=' + JSON.stringify(tournament) + '&players=' + $scope.players;
+  var info = 'action=addTournament' + '&tournamentInfo=' + JSON.stringify(tournament) + '&players=' + JSON.stringify($scope.players);
   $scope.postData(info);
   //llamar una funcion en modelo que cree
   console.log(info);
