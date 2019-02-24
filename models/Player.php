@@ -1,5 +1,5 @@
 <?php
-define('__ROOT__', dirname(dirname(__FILE__)));
+//define('__ROOT__', dirname(dirname(__FILE__)));
 //include(__ROOT__.'/connection.php');
 
 

@@ -1,6 +1,6 @@
 <?php
 include_once '../connection.php';
-//require(__ROOT__.'/models/queries.php');
+
 
 $dashboard = new Dashboard($conn);
 
@@ -19,7 +19,7 @@ class Dashboard{
 
   function getTournaments(){
     $tournamentsArray = array();
-    $stmt = $this->conn->query("SELECT * FROM tournament order by id_tournament desc");
+    $stmt = $this->conn->query("SELECT * FROM tournament where finish = 0 order by id_tournament desc");
     if ($stmt->num_rows > 0) {
       while( $row = $stmt->fetch_assoc() ) {
           $tournamentsArray[] = $row;

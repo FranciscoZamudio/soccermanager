@@ -4,7 +4,7 @@ moduleApp.controller('saveTournamentController', function($scope, $http) {
   $scope.getData = function(){
       $http({
             method : "GET",
-            url : "./models/saveTournamentModel.php?getTournaments=gt"
+            url : "./controllers/saveTournament.php?getTournaments=gt"
         }).then(function mySuccess(response) {
             $scope.tournamentTable = response.data;
         }, function myError(response) {

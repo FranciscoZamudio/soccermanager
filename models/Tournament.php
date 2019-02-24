@@ -1,21 +1,27 @@
 <?php
-define('__ROOT__', dirname(dirname(__FILE__)));
-//include(__ROOT__.'/connection.php');
-require_once(__ROOT__.'/models/Player.php');
+//define('__ROOT__', dirname(dirname(__FILE__)));
+//include(__ROOT__.'');
+require_once('../connection.php');
+require_once('Player.php');
 
 
 
 class Tournament{
-  private $conn;
   private $id;
   private $date;
   private $status;
+  private $winnerPlayer;
+  private $winnerTeam;
 
-  function __construct($conn){
-    $this->conn = $conn;
+  function __construct($id, $date, $status, $wPlayer, $wTeam){
+    $this->id = $id;
+    $this->date = $date;
+    $this->status = $status;
+    $this->$winnerPlayer = $wPlayer;
+    $this->$winnerTeam = $sTeam;
   }
 
-  function createTournament($conn, $tInfo, $p){
+  static function createTournament($conn, $tInfo, $p){
     $tournamentInfo = json_decode($tInfo);
 
     $date = date("Y-m-d");
@@ -61,6 +67,18 @@ class Tournament{
       }
     }
     return array_chunk($tournamentsArray, 4);
+  }
+
+  static function getTournaments($conn){
+    $tournamentsArray = array();
+    $stmt = $conn->query("SELECT * FROM tournament where finish = 0 order by id_tournament desc");
+    if ($stmt->num_rows > 0) {
+      while( $row = $stmt->fetch_assoc() ) {
+          //$tournamentsArray[] = $row;//objeto tipo tournament ver como acceder arriba hay ejemplo
+          $tournamentsArray[] = new Tournament($row["id_tournament"], $row["datecreated"], $row["finish"], $row["winner_team"], $row["winner_name"]);
+      }
+    }
+    echo json_encode($tournamentsArray);
   }
 
 
