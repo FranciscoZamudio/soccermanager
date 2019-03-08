@@ -25,7 +25,7 @@ moduleApp.config(function ($stateProvider,$urlRouterProvider) {
     }
     var continueTournamentState = {
         name: 'continueTournament',
-        url: '/continueTournament',
+        url: '/continueTournament/{tournamentId}',
         templateUrl: 'views/continueTournament.html',
         controller: 'continueTournamentController'
     }

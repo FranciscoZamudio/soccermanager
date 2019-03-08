@@ -15,7 +15,7 @@
       <tr ng-repeat="tournament in tournamentTable">
         <td>{{ tournament.id_tournament }}</td>
         <td>{{ tournament.datecreated }}</td>
-        <td><button ng-click="">open</button></td>
+        <td><button ui-sref="continueTournament({tournamentId: tournament.id_tournament})">open</button></td>
       </tr>
     </tbody>
     </table>

@@ -5,21 +5,62 @@ require_once('../connection.php');
 require_once('Player.php');
 
 
-
-class Tournament{
-  private $id;
+class Tournament implements \JsonSerializable{
   private $date;
   private $status;
   private $winnerPlayer;
   private $winnerTeam;
+  private $players = array();//players object array
+  private $conn;//$conn comes from connection.php
 
-  function __construct($id, $date, $status, $wPlayer, $wTeam){
-    $this->id = $id;
-    $this->date = $date;
-    $this->status = $status;
-    $this->$winnerPlayer = $wPlayer;
-    $this->$winnerTeam = $sTeam;
+  function __construct($conn, $id){
+    $this->conn = $conn;
+    $this->setProperties($id);
   }
+
+  private function setProperties($id){
+    $stmt = $this->conn->query("SELECT * FROM tournament WHERE id_tournament = '".$id."' ");
+    if ($stmt->num_rows > 0) {
+      while( $row = $stmt->fetch_assoc() ) {
+          $this->date = $row["datecreated"];
+          $this->status = $row["finish"];
+          $this->winnerTeam = $row["winner_team"];
+          $this->winnerPlayer = $row["winner_name"];
+      }
+    }
+
+    //set my array of players
+    $stmt = $this->conn->query("SELECT * FROM player WHERE id_tournament = '".$id."' ");
+    if ($stmt->num_rows > 0) {
+      while( $row = $stmt->fetch_assoc() ) {
+          $this->players[] = json_encode(new Player($this->conn, $id));
+      }
+    }
+  }
+
+  public function jsonSerialize() {
+        return array(
+            'status' => $this->status,
+            'players' => $this->players
+        );
+  }
+
+  function getDate(){
+    return $this->date;
+  }
+  function getStatus(){
+    return $this->status;
+  }
+  function getWinnerTeam(){
+    return $this->winnerTeam;
+  }
+  function getWinnerPlayer(){
+    return $this->winnerPlayer;
+  }
+  function getPlayers(){
+    return $this->players;
+  }
+
 
   static function createTournament($conn, $tInfo, $p){
     $tournamentInfo = json_decode($tInfo);
@@ -47,10 +88,10 @@ class Tournament{
     //create players
     //print_r($players);
     foreach($players as $key=>$pl) {
-      $player = new Player($conn);
+      //$player = new Player($conn);
       $name = $pl->name;
       $teams = $teamsArray[$key];
-      $player->createPlayer($tournamentID, $name, $teams);
+      Player::createPlayer($conn, $tournamentID, $name, $teams);
       $teams = array();
     }
     $conn->close();
@@ -74,8 +115,8 @@ class Tournament{
     $stmt = $conn->query("SELECT * FROM tournament where finish = 0 order by id_tournament desc");
     if ($stmt->num_rows > 0) {
       while( $row = $stmt->fetch_assoc() ) {
-          //$tournamentsArray[] = $row;//objeto tipo tournament ver como acceder arriba hay ejemplo
-          $tournamentsArray[] = new Tournament($row["id_tournament"], $row["datecreated"], $row["finish"], $row["winner_team"], $row["winner_name"]);
+          $tournamentsArray[] = $row;//objeto tipo tournament ver como acceder arriba hay ejemplo
+          //$tournamentsArray[] = new Tournament($row["id_tournament"], $row["datecreated"], $row["finish"], $row["winner_team"], $row["winner_name"]);
       }
     }
     echo json_encode($tournamentsArray);
