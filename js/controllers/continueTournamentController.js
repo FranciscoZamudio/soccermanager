@@ -1,8 +1,13 @@
 //we inject the controller with a model
-moduleApp.controller("continueTournamentController", function($scope, ticketsService, $http){
-
-
-
+moduleApp.controller("continueTournamentController", function($scope, $http){
+  var tournament = '{'+
+'"status": 0,'+
+'"players" : ['+
+'{ "name":"John" , "team1":"barcelona", "team2":"Borusia Dourtmund", "team3":"Inter", "team4":"Lyon" },' +
+'{ "name":"Anna" , "team1":"Real Madrid", "team2":"Liverpool", "team3":"Manchester City", "team4":"PSG" },' +
+'{ "name":"Felipe" , "team1":"Atletico Madrid", "team2":"Manchester United", "team3":"Arsenal", "team4":"Milan" } ]}';
+  $scope.tournament = JSON.parse(tournament);
+  console.log($scope.tournament);
   $scope.postData = function(info){
     $http({
           url : "./models/ticketsModel.php",
@@ -33,6 +38,7 @@ $scope.playersInput = function(numberPlayers) {
     $scope.players.push({name:''});
   }
 };
+
 
 
 });

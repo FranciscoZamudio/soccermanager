@@ -1,7 +1,27 @@
 <div id="form">
   <div class="container">
     <form>
-        <div class="row">
+      <div class="row">
+        <fieldset>
+            <legend>Group 1:</legend>
+            <h3 ng-repeat="x in tournament.players">{{x.name}}: {{x.team1}} <input type="checkbox" ng-model = "group1.team" value={{x.team1}} ng-click="save()"></h3>
+        </fieldset>
+        <fieldset>
+          <legend >Group 2:</legend>
+          <h3 ng-repeat="x in tournament.players">{{x.name}}: {{x.team2}} <input type="checkbox" ng-model = "group2.team" value={{x.team2}} ng-click="save()"></h3>
+        </fieldset>
+      </div>
+      <div class="row">
+        <fieldset>
+            <legend>Group 3:</legend>
+            <h3 ng-repeat="x in tournament.players">{{x.name}}: {{x.team3}} <input type="checkbox" ng-model = "group3.team" value={{x.team1}} ng-click="save()"></h3>
+        </fieldset>
+        <fieldset>
+            <legend>Group 4:</legend>
+        <h3 ng-repeat="x in tournament.players">{{x.name}}: {{x.team4}} <input type="checkbox" ng-model = "group4.team" value={{x.team1}} ng-click="save()"></h3>
+            </fieldset>
+      </div>
+        <!-- <div class="row">
           <fieldset>
            <legend>Group 1:</legend>
            Name: <input type="text"><br>
@@ -28,7 +48,7 @@
            Email: <input type="text"><br>
            Date of birth: <input type="text">
           </fieldset>
-        </div>
+        </div> -->
     </form>
   </div>
 
@@ -88,29 +108,4 @@
           <li class="spacer">&nbsp;</li>
       </ul>
   </main>
-
-  <!-- <form>
-  <!-- <h3>personal info:</h3><br> -->
-    <!-- <div class="form-group">
-      <label for="typeId">Type of tournament</label>
-      <select class="form-control" id="typeId" ng-model = "tournament.type">
-        <option value = "marketing"> top teams
-        <option value = "human resources">world ranking
-      </select>
-    </div> -->
-
-  <!-- <h3>issue info:</h3><br> -->
-    <!-- <div>
-      <label for="playersId">Number of players: </label>
-      <input type="radio" ng-model = "tournament.players" value="3" ng-click="playersInput(3)"> 3
-      <input type="radio" ng-model = "tournament.players" value="4" ng-click="playersInput(4)"> 4
-      <input type="radio" ng-model = "tournament.players" value="5" ng-click="playersInput(5)"> 5
-    </div>
-
-    <div ng-repeat='element in players'>
-        player: <input type='text' ng-model='element.name'>
-    </div>
-
-    <input type="submit" ng-click="createTournament(tournament)" value="upload" /> -->
-  <!-- </form> -->
 </div>
